@@ -6,18 +6,16 @@
 /*   By: mmezyan <mmezyan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 13:28:48 by mmezyan           #+#    #+#             */
-/*   Updated: 2023/11/24 11:46:06 by mmezyan          ###   ########.fr       */
+/*   Updated: 2023/11/25 18:16:47 by mmezyan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
 
 int	ft_putchar(char c)
 {
-	if (!c)
-		return (NULL);
-	write(1, &c, 1);
-	return (1);
+	return (write(1, &c, 1));
 }
 
 int	ft_putstr(char *str)
@@ -25,45 +23,50 @@ int	ft_putstr(char *str)
 	int i;
 	
 	i = 0;
+	
 	if (!str)
 		return (write(1,"(null)",6));
 	while (str[i])
-		write(1, &str[i++], 1);
+	{
+		if (write(1, &str[i], 1) == -1)
+			return (-1);
+		i++;
+	}
 	return (i);
 }
 
-int	ft_put_x(int nb)
+int	ft_put_x(unsigned int nb)
 {
 	int count;
-	char a[16];
+	char *a;
 	
 	count = 0; 
-	a[16] = "0123456789abcdef";
+	a = "0123456789abcdef";
 	if (nb >= 0 && nb < 16)
-		count += ft_putchar(a[nb]);
+		count+=ft_putchar(a[nb]);
 	else
 	{
-		ft_putnbr(nb / 16);
-		ft_putnbr(nb % 16);
+		count+=ft_putnbr(nb / 16);
+		count+=ft_putnbr(nb % 16);
 	}
+	return(count);
 }
 
-int	ft_put_X(int nb)
+int	ft_put_X(unsigned int nb)
 {
 	int count;
-	char a[16] ;
+	char *a ;
 	
-	a[16]= "0123456789ABCDEF";
+	a = "0123456789ABCDEF";
 	count = 0;
 	if (nb >= 0 && nb < 16)
-	{
-		count += ft_putchar(a[nb]);
-	}
+		count+=ft_putchar(a[nb]);
 	else
 	{
-		ft_putnbr(nb / 16);
-		ft_putnbr(nb % 16);
+		count+=ft_putnbr(nb / 16);
+		count+=ft_putnbr(nb % 16);
 	}
+	return (count);
 }
 
 int	ft_putuns(unsigned int nb)
@@ -74,14 +77,14 @@ int	ft_putuns(unsigned int nb)
 	if (nb >= 0 && nb <= 9)
 	{
 		nb = nb + 48;
-		write(1, &nb, 1);
-		count++;
+		count+=write(1, &nb, 1);
 	}
 	else
 	{
-		ft_putnbr(nb / 10);
-		ft_putnbr(nb % 10);
+		count+=ft_putnbr(nb / 10);
+		count+=ft_putnbr(nb % 10);
 	}
+	return (count);
 }
 
 int	ft_putnbr(int nb)
@@ -103,13 +106,13 @@ int	ft_putnbr(int nb)
 	else if (nb >= 0 && nb <= 9)
 	{
 		nb = nb + 48;
-		write(1, &nb, 1);
-		count++;
+		count+=write(1, &nb, 1);
+		
 	}
 	else
 	{
-		ft_putnbr(nb / 10);
-		ft_putnbr(nb % 10);
+		count+=ft_putnbr(nb / 10);
+		count+=ft_putnbr(nb % 10);
 	}
 	return (count);
 }
@@ -117,10 +120,20 @@ int	ft_putnbr(int nb)
 int	ft_putpointer(unsigned long n)
 {
 	int count;
+	char *a;
+
 	count = 0;
 	if (!n)
 		return(ft_putstr("0x0"));
-	write(1,"0x",2);
-	count += ft_put_x(n);
+	if (write(1,"0x",2) == -1)
+		return (-1);
+	a = "0123456789abcdef";
+	if (n >= 0 && n <= 16)
+		count+=ft_putchar(a[n]);
+	else
+	{
+		count+=ft_putpointer(n / 16);
+		count+=ft_putpointer(n % 16);
+	}
 	return (count + 2);
 }
