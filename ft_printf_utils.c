@@ -51,20 +51,23 @@ int	ft_putuns(unsigned int nb)
 	return (count);
 }
 
-int	ft_putnbr(int nb)
+int	ft_putnbr(int n)
 {
-	int	count;
-	long	n;
+	int		count;
+	long	nb;
 
+	nb = n;
 	count = 0;
-	n = nb;
-	if (n < 0)
+	if (nb < 0)
 	{
-		count += ft_putchar('-'); 
-		n = -nb;
+		nb = -nb;
+		count += ft_putchar('-');
 	}
-	if (n < 10)
-		count += ft_putchar(n + '0'); 
+	if (nb < 10)
+	{
+		nb += 48;
+		count += ft_putchar(nb);
+	}
 	else
 	{
 		count += ft_putnbr(nb / 10);
@@ -75,6 +78,6 @@ int	ft_putnbr(int nb)
 
 void ft_strrev(char *s, int len)
 {
-	while (len >= 0)
-		write(1, &s[--len], 1);
+	while (len--)
+		write(1, &s[len], 1);
 }

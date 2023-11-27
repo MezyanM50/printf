@@ -14,21 +14,22 @@
 int	ft_put_x(unsigned int nb)
 {
 	char	*a;
-	char	s[32;
+	char	s[32];
 	int		i;
 	
 	if (nb == 0)
 		return (ft_putchar('0'));
 	i = 0;
 	a = "0123456789abcdef";
-	while (nb > 0)
+	while (nb >= 16)
 	{
 		s[i++] = a[nb % 16];
 		nb /= 16;
 	}
+	s[i++] = a[nb];
 	s[i] = '\0';
 	ft_strrev(s,i);
-	return (1);
+	return (i);
 }
 
 int	ft_put_gx(unsigned int nb)
@@ -41,11 +42,12 @@ int	ft_put_gx(unsigned int nb)
 	a = "0123456789ABCDEF";
 	if (nb == 0)
 		return (ft_putchar('0'));
-	while (nb > 0)
+	while (nb >= 16)
 	{
 		s[i++] = a[nb % 16];
 		nb /= 16;
 	}
+	s[i++] = a[nb];
 	s[i] = '\0';
 	ft_strrev(s,i);
 	return (i);
@@ -53,26 +55,22 @@ int	ft_put_gx(unsigned int nb)
 
 int	ft_putpointer(unsigned long n)
 {
-	int		count;
 	char	*a;
 	char	s[17];
 	int		i;
 
-	count = 0;
 	i = 0;
 	a = "0123456789abcdef";
 	if (n == 0)
 		return (ft_putstr("0x0"));
 	write(1, "0x", 2);
-	count += 2;
 	while (n)
 	{
 		s[i++] = a[n % 16];
 		n /= 16;
-		count ++;
 	}
 	s[i] = '\0';
 	ft_strrev(s,i);
-	return (count);
+	return (i + 2);
 }
 
