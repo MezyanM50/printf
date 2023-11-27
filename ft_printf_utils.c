@@ -39,7 +39,7 @@ int	ft_putuns(unsigned int nb)
 	int count;
 
 	count = 0;
-	if (nb >= 0 && nb <= 9)
+	if (nb < 10)
 	{
 		nb = nb + 48;
 		count+=write(1, &nb, 1);

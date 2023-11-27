@@ -50,11 +50,3 @@ int	ft_printf(const char *str, ...)
 	va_end(args);
 	return (count);
 }
-#include <stdio.h>
-int main()
-{
-	//int count = printf("%%");
-	printf("\n");
-	int count = ft_printf("%s", NULL);
-	ft_printf("\n%d",count);
-}

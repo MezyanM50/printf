@@ -18,6 +18,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
+int     ft_printf(const char *str, ...);
 int	ft_putpointer(unsigned long n);
 int	ft_putnbr(int nb);
 int	ft_putuns(unsigned int nb);

@@ -9,7 +9,7 @@
 /*   Updated: 2023/11/27 15:22:48 by mmezyan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include "ft_printf.h"
 int	ft_put_x(unsigned int nb)
 {
 	int count;
@@ -55,7 +55,7 @@ int	ft_put_X(unsigned int nb)
 	}
 	ft_putstr(s);
 	free(s);
-	return (count);
+		return (count);
 }
 
 int	ft_putpointer(unsigned long n)
@@ -91,8 +91,6 @@ unsigned int	ft_number_size_xX(unsigned int number)
 	length = 0;
 	if (number == 0)
 		return (1);
-	if (number < 0)
-		length += 1;
 	while (number != 0)
 	{
 		number /= 10;
