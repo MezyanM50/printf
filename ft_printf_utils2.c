@@ -10,81 +10,76 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
+
 int	ft_put_x(unsigned int nb)
 {
-	int count;
-	char *a;
-	char *s;
-	int i;
+	int		count;
+	char	*a;
+	char	s[100];
+	int		i;
 
 	count = 0;
-	i = ft_number_size_xX(nb);
+	i = 0;
 	a = "0123456789abcdef";
-	s = malloc(i + 1);
-	count += 2;
-	s[i] = '\0';
-	while (nb)
+	while (nb > 0)
 	{
-		s[--i] = a[nb %16];
+		s[i++] = a[nb % 16];
 		nb /= 16;
 		count ++;
 	}
-	ft_putstr(s);
-	free(s);
+	s[i] = '\0';
+	ft_strrev(s,i);
 	return (count);
 }
 
-int	ft_put_X(unsigned int nb)
+int	ft_put_gx(unsigned int nb)
 {
-	int count;
-	char *a;
-	char *s;
-	int i;
+	int		count;
+	char	*a;
+	char	s[100];
+	int		i;
 
 	count = 0;
-	i = ft_number_size_xX(nb);
+	i = ft_number_size_x(nb);
 	a = "0123456789ABCDEF";
-	s = malloc(ft_number_size_pointer(nb)+ 1);
 	count += 2;
-	s[i] = '\0';
 	while (nb)
 	{
-		s[--i] = a[nb %16];
+		s[i++] = a[nb % 16];
 		nb /= 16;
 		count ++;
 	}
-	ft_putstr(s);
-	free(s);
-		return (count);
+	s[i] = '\0';
+	ft_strrev(s,i);
+	return (count);
 }
 
 int	ft_putpointer(unsigned long n)
 {
-	int count;
-	char *a;
-	char *s;
-	int i;
+	int		count;
+	char	*a;
+	char	s[17];
+	int		i;
 
 	count = 0;
-	i = ft_number_size_pointer(n);
+	i = 0;
 	a = "0123456789abcdef";
-	s = malloc(ft_number_size_pointer(n)+ 1);
-	if(write(1, "0x0", 3) == -1)
-		return (-1);
-	count += 3;
-	s[i] = '\0';
+	if (!n)
+		return (write(1, "0x0", 3));
+	write(1, "0x", 2);
+	count += 2;
 	while (n)
 	{
-		s[--i] = a[n %16];
+		s[i++] = a[n % 16];
 		n /= 16;
 		count ++;
 	}
-	ft_putstr(s);
-	free(s);
+	s[i] = '\0';
+	ft_strrev(s,i);
 	return (count);
 }
 
-unsigned int	ft_number_size_xX(unsigned int number)
+unsigned int	ft_number_size_x(unsigned int number)
 {
 	unsigned int	length;
 

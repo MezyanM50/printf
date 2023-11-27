@@ -12,6 +12,26 @@
 
 #include "ft_printf.h"
 
+void	ft_p2(char c, int *count, va_list args)
+{
+			if (c == 'd' || c == 'i')
+				*count += ft_putnbr(va_arg(args, int));
+			else if (c == 'p')
+				*count += ft_putpointer(va_arg(args,unsigned long));
+			else if (c == 's')
+				*count += ft_putstr(va_arg(args,char *));
+			else if (c == 'c')
+				*count +=ft_putchar(va_arg(args,int));
+			else if (c == 'u')
+				*count += ft_putuns(va_arg(args,unsigned int));
+			else if (c == 'x')
+				*count +=ft_put_x(va_arg(args,unsigned int));
+			else if (c == 'X')
+				*count +=ft_put_gx(va_arg(args,unsigned int));
+			else if (c == '%')
+				*count += ft_putchar('%');
+}
+
 int	ft_printf(const char *str, ...)
 {
 	int		i;
@@ -26,25 +46,10 @@ int	ft_printf(const char *str, ...)
 		if (str[i] == '%')
 		{
 			i++;
-			if (str[i] == 'd' || str[i] == 'i')
-				count += ft_putnbr(va_arg(args, int));
-			else if (str[i] == 'p')
-				count += ft_putpointer(va_arg(args,unsigned long));
-			else if (str[i] == 's')
-				count += ft_putstr(va_arg(args,char *));
-			else if (str[i] == 'c')
-				count +=ft_putchar(va_arg(args,int));
-			else if (str[i] == 'u')
-				count += ft_putuns(va_arg(args,unsigned int));
-			else if (str[i] == 'x')
-				count +=ft_put_x(va_arg(args,unsigned int));
-			else if (str[i] == 'X')
-				count +=ft_put_X(va_arg(args,unsigned int));
-			else if (str[i] == '%')
-				count += ft_putchar('%');
+			ft_p2(str[i], &count, args);
 		}
 		else if (str[i] != '%')
-			ft_putchar(str[i]);
+			count += ft_putchar(str[i]);
 		i++;
 	}
 	va_end(args);

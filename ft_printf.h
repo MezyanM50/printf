@@ -10,24 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#ifndef	FT_PRINTF_H
+#ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-#include <unistd.h>
-#include <stdarg.h>
-#include <stdlib.h>
+# include <unistd.h>
+# include <stdarg.h>
+# include <stdlib.h>
 
-int     ft_printf(const char *str, ...);
-int	ft_putpointer(unsigned long n);
-int	ft_putnbr(int nb);
-int	ft_putuns(unsigned int nb);
-int	ft_put_X(unsigned int nb);
-int	ft_put_x(unsigned int nb);
-int	ft_putstr(char *str);
-int	ft_putchar(char c);
+void			ft_p2(char c, int *count, va_list args);
+void			ft_strrev(char *s, int len);
+int				ft_printf(const char *str, ...);
+int				ft_putpointer(unsigned long n);
+int				ft_putnbr(int nb);
+int				ft_putuns(unsigned int nb);
+int				ft_put_gx(unsigned int nb);
+int				ft_put_x(unsigned int nb);
+int				ft_putstr(char *str);
+int				ft_putchar(char c);
 unsigned int	ft_number_size_pointer(unsigned long number);
-unsigned int	ft_number_size_xX(unsigned int number);
+unsigned int	ft_number_size_x(unsigned int number);
 
 #endif
-
