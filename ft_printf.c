@@ -6,7 +6,7 @@
 /*   By: mmezyan <mmezyan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 13:34:44 by mmezyan           #+#    #+#             */
-/*   Updated: 2023/11/25 11:54:29 by mmezyan          ###   ########.fr       */
+/*   Updated: 2023/11/27 14:37:05 by mmezyan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,17 @@ int	ft_printf(const char *str, ...)
 	count = 0;
 	while (str[i])
 	{
-		if (str[i] == '%' && str[++i])
+		if (str[i] == '%')
 		{
+			i++;
 			if (str[i] == 'd' || str[i] == 'i')
 				count += ft_putnbr(va_arg(args, int));
 			else if (str[i] == 'p')
 				count += ft_putpointer(va_arg(args,unsigned long));
 			else if (str[i] == 's')
 				count += ft_putstr(va_arg(args,char *));
-			else if (str [i] == 'c')
-				count +=ft_putchar(va_arg(args,char));
+			else if (str[i] == 'c')
+				count +=ft_putchar(va_arg(args,int));
 			else if (str[i] == 'u')
 				count += ft_putuns(va_arg(args,unsigned int));
 			else if (str[i] == 'x')
@@ -40,7 +41,7 @@ int	ft_printf(const char *str, ...)
 			else if (str[i] == 'X')
 				count +=ft_put_X(va_arg(args,unsigned int));
 			else if (str[i] == '%')
-			i++;
+				count += ft_putchar('%');
 		}
 		else if (str[i] != '%')
 			ft_putchar(str[i]);
@@ -52,8 +53,8 @@ int	ft_printf(const char *str, ...)
 #include <stdio.h>
 int main()
 {
-	char *str = "ldnasldn";
-	int count = ft_printf("%p",str);
-	printf("\n%p",str);
-	//ft_printf("\n%d",count);
+	//int count = printf("%%");
+	printf("\n");
+	int count = ft_printf("%s", NULL);
+	ft_printf("\n%d",count);
 }

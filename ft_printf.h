@@ -6,7 +6,7 @@
 /*   By: mmezyan <mmezyan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 13:33:31 by mmezyan           #+#    #+#             */
-/*   Updated: 2023/11/25 11:52:58 by mmezyan          ###   ########.fr       */
+/*   Updated: 2023/11/27 10:50:55 by mmezyan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 #include <unistd.h>
 #include <stdarg.h>
+#include <stdlib.h>
 
 int	ft_putpointer(unsigned long n);
 int	ft_putnbr(int nb);
@@ -24,6 +25,8 @@ int	ft_put_X(unsigned int nb);
 int	ft_put_x(unsigned int nb);
 int	ft_putstr(char *str);
 int	ft_putchar(char c);
+unsigned int	ft_number_size_pointer(unsigned long number);
+unsigned int	ft_number_size_xX(unsigned int number);
 
 #endif
 

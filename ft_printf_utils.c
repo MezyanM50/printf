@@ -6,7 +6,7 @@
 /*   By: mmezyan <mmezyan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 13:28:48 by mmezyan           #+#    #+#             */
-/*   Updated: 2023/11/25 18:16:47 by mmezyan          ###   ########.fr       */
+/*   Updated: 2023/11/27 14:36:57 by mmezyan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,33 +39,47 @@ int	ft_put_x(unsigned int nb)
 {
 	int count;
 	char *a;
-	
-	count = 0; 
+	char *s;
+	int i;
+
+	count = 0;
+	i = ft_number_size_xX(nb);
 	a = "0123456789abcdef";
-	if (nb >= 0 && nb < 16)
-		count+=ft_putchar(a[nb]);
-	else
+	s = malloc(i + 1);
+	count += 2;
+	s[i] = '\0';
+	while (nb)
 	{
-		count+=ft_putnbr(nb / 16);
-		count+=ft_putnbr(nb % 16);
+		s[--i] = a[nb %16];
+		nb /= 16;
+		count ++;
 	}
-	return(count);
+	ft_putstr(s);
+	free(s);
+	return (count);
 }
 
 int	ft_put_X(unsigned int nb)
 {
 	int count;
-	char *a ;
-	
-	a = "0123456789ABCDEF";
+	char *a;
+	char *s;
+	int i;
+
 	count = 0;
-	if (nb >= 0 && nb < 16)
-		count+=ft_putchar(a[nb]);
-	else
+	i = ft_number_size_xX(nb);
+	a = "0123456789ABCDEF";
+	s = malloc(ft_number_size_pointer(nb)+ 1);
+	count += 2;
+	s[i] = '\0';
+	while (nb)
 	{
-		count+=ft_putnbr(nb / 16);
-		count+=ft_putnbr(nb % 16);
+		s[--i] = a[nb %16];
+		nb /= 16;
+		count ++;
 	}
+	ft_putstr(s);
+	free(s);
 	return (count);
 }
 
@@ -121,19 +135,55 @@ int	ft_putpointer(unsigned long n)
 {
 	int count;
 	char *a;
+	char *s;
+	int i;
 
 	count = 0;
-	if (!n)
-		return(ft_putstr("0x0"));
-	if (write(1,"0x",2) == -1)
-		return (-1);
+	i = ft_number_size_pointer(n);
 	a = "0123456789abcdef";
-	if (n >= 0 && n <= 16)
-		count+=ft_putchar(a[n]);
-	else
+	s = malloc(ft_number_size_pointer(n)+ 1);
+	if(write(1, "0x0", 3) == -1)
+		return (-1);
+	count += 3;
+	s[i] = '\0';
+	while (n)
 	{
-		count+=ft_putpointer(n / 16);
-		count+=ft_putpointer(n % 16);
+		s[--i] = a[n %16];
+		n /= 16;
+		count ++;
 	}
-	return (count + 2);
+	ft_putstr(s);
+	free(s);
+	return (count);
+}
+unsigned int	ft_number_size_xX(unsigned int number)
+{
+	unsigned int	length;
+
+	length = 0;
+	if (number == 0)
+		return (1);
+	if (number < 0)
+		length += 1;
+	while (number != 0)
+	{
+		number /= 10;
+		length++;
+	}
+	return (length);
+}
+
+unsigned int	ft_number_size_pointer(unsigned long number)
+{
+	unsigned int	length;
+
+	length = 0;
+	if (number == 0)
+		return (1);
+	while (number > 0)
+	{
+		number /= 16;
+		length++;
+	}
+	return (length);
 }
